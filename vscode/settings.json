@@ -10,6 +10,10 @@
 			{
 					"before": ["j", "k"],
 					"after": ["<Esc>"]
+			},
+			{
+					"before": ["J", "K"],
+					"after": ["<Esc>"]
 			}
 	],
 	"vim.operatorPendingModeKeyBindings": [
@@ -34,5 +38,11 @@
 			"editor.defaultFormatter": "misogi.ruby-rubocop"
 	},
 	"ruby.rubocop.useBundler": true,
-	"editor.lineNumbers": "relative"
+	"editor.lineNumbers": "relative",
+
+	// 須先下載 im-select 套件
+	"vim.autoSwitchInputMethod.enable": true,
+	"vim.autoSwitchInputMethod.switchIMCmd": "/opt/homebrew/bin/im-select com.apple.keylayout.ABC {im}",
+	"vim.autoSwitchInputMethod.defaultIM": "com.apple.keylayout.ABC",
+	"vim.autoSwitchInputMethod.obtainIMCmd": "/opt/homebrew/bin/im-select"
 }
