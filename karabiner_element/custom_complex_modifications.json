@@ -1,0 +1,70 @@
+// /Users/anthonychao/.config/karabiner/assets/complex_modifications/customkeybindings.json
+
+{
+	"title": "Custom key combinations",
+	"rules": [
+		{
+			"description": "Remap ctrl+q to Esc",
+			"manipulators": [
+				{
+					"type": "basic",
+					"from": {
+						"key_code": "q",
+						"modifiers": {
+							"mandatory": [
+								"left_control"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "escape"
+						}
+					]
+				}
+			]
+		},
+		{
+			"description": "Remap ctrl+j to down arrow",
+			"manipulators": [
+				{
+					"type": "basic",
+					"from": {
+						"key_code": "j",
+						"modifiers": {
+							"mandatory": [
+								"left_control"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "down_arrow"
+						}
+					]
+				}
+			]
+		},
+		{
+			"description": "Remap ctrl+k to up arrow",
+			"manipulators": [
+				{
+					"type": "basic",
+					"from": {
+						"key_code": "k",
+						"modifiers": {
+							"mandatory": [
+								"left_control"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "up_arrow"
+						}
+					]
+				}
+			]
+		}
+	]
+}

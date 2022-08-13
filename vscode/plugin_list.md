@@ -1,0 +1,10 @@
+- draw.io integration
+- EditorConfig for VS Code
+- Git History
+- GitLens
+- PasteImage
+- Prettier
+- Ruby
+- ruby-rubocop
+- ruby-symbols
+- Vim

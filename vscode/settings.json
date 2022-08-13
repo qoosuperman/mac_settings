@@ -1,0 +1,38 @@
+{
+	"window.zoomLevel": 2,
+	"editor.tabSize": 2,
+	"editor.insertSpaces": false,
+	"files.trimTrailingWhitespace": true,
+	"files.trimFinalNewlines": true,
+
+	// vimplugin settings
+	"vim.insertModeKeyBindings": [
+			{
+					"before": ["j", "k"],
+					"after": ["<Esc>"]
+			}
+	],
+	"vim.operatorPendingModeKeyBindings": [
+			// 行頭改成 h (搭配 d 使用)
+			{
+					"before": ["h"],
+					"after": ["^"]
+			},
+			// 行尾改成 l (搭配 d 使用)
+			{
+					"before": ["l"],
+					"after": ["$"]
+			}
+	],
+	"vim.surround": true,
+	"editor.rename.enablePreview": false,
+	"workbench.editor.enablePreview": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"ruby.rubocop.executePath": "/Users/anthonychao/.rbenv/shims/",
+	"ruby.rubocop.onSave": true,
+	"[ruby]": {
+			"editor.defaultFormatter": "misogi.ruby-rubocop"
+	},
+	"ruby.rubocop.useBundler": true,
+	"editor.lineNumbers": "relative"
+}
