@@ -1,48 +1,79 @@
 {
-	"window.zoomLevel": 2,
-	"editor.tabSize": 2,
-	"editor.insertSpaces": false,
-	"files.trimTrailingWhitespace": true,
-	"files.trimFinalNewlines": true,
+  "window.zoomLevel": 2,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
 
-	// vimplugin settings
-	"vim.insertModeKeyBindings": [
-			{
-					"before": ["j", "k"],
-					"after": ["<Esc>"]
-			},
-			{
-					"before": ["J", "K"],
-					"after": ["<Esc>"]
-			}
-	],
-	"vim.operatorPendingModeKeyBindings": [
-			// 行頭改成 h (搭配 d 使用)
-			{
-					"before": ["h"],
-					"after": ["^"]
-			},
-			// 行尾改成 l (搭配 d 使用)
-			{
-					"before": ["l"],
-					"after": ["$"]
-			}
-	],
-	"vim.surround": true,
-	"editor.rename.enablePreview": false,
-	"workbench.editor.enablePreview": false,
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"ruby.rubocop.executePath": "/Users/anthonychao/.rbenv/shims/",
-	"ruby.rubocop.onSave": true,
-	"[ruby]": {
-			"editor.defaultFormatter": "misogi.ruby-rubocop"
-	},
-	"ruby.rubocop.useBundler": true,
-	"editor.lineNumbers": "relative",
+  // vimplugin settings
+  "vim.insertModeKeyBindings": [
+      {
+          "before": ["j", "k"],
+          "after": ["<Esc>"]
+      },
+      {
+          "before": ["J", "K"],
+          "after": ["<Esc>"]
+      }
+  ],
+  "vim.operatorPendingModeKeyBindings": [
+      // 行頭改成 h (搭配 d 使用)
+      {
+          "before": ["h"],
+          "after": ["^"]
+      },
+      // 行尾改成 l (搭配 d 使用)
+      {
+          "before": ["l"],
+          "after": ["$"]
+      }
+  ],
+  "vim.surround": true,
+  // easymotion settings
+  "vim.easymotion": true,
+  "vim.easymotionMarkerBackgroundColor": "#FBD87F",
+  "vim.easymotionMarkerFontWeight": "bold",
+  "vim.easymotionMarkerForegroundColorOneChar": "#DE0079",
+  "vim.easymotionKeys": "hklyuiopnmqwertzxcvbasdgjf",
+  "vim.normalModeKeyBindingsNonRecursive": [
+      {
+          "before": [" "],
+          "after": ["leader", "leader" , "s"]
+      },
+  ],
 
-	// 須先下載 im-select 套件
-	"vim.autoSwitchInputMethod.enable": true,
-	"vim.autoSwitchInputMethod.switchIMCmd": "/opt/homebrew/bin/im-select com.apple.keylayout.ABC {im}",
-	"vim.autoSwitchInputMethod.defaultIM": "com.apple.keylayout.ABC",
-	"vim.autoSwitchInputMethod.obtainIMCmd": "/opt/homebrew/bin/im-select"
+  "editor.rename.enablePreview": false,
+  "workbench.editor.enablePreview": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "ruby.rubocop.executePath": "/Users/anthonychao/.rbenv/shims/",
+  "ruby.rubocop.onSave": true,
+  "[ruby]": {
+      "editor.defaultFormatter": "misogi.ruby-rubocop"
+  },
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    }
+  },
+  "ruby.rubocop.useBundler": true,
+  "editor.lineNumbers": "relative",
+
+  // 須先下載 im-select 套件
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.switchIMCmd": "/opt/homebrew/bin/im-select com.apple.keylayout.ABC {im}",
+  "vim.autoSwitchInputMethod.defaultIM": "com.apple.keylayout.ABC",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/opt/homebrew/bin/im-select",
+
+  // js 相關
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript"
+  ],
+  "editor.stickyScroll.enabled": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
 }

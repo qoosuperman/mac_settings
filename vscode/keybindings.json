@@ -1,33 +1,43 @@
 // 將按鍵繫結關係放在此檔案中以覆寫預設
 [
-	// fix neovim plugin issue
-{
-			"command": "vscode-neovim.compositeEscape1",
-			"key": "j",
-			"when": "neovim.mode == insert && editorTextFocus",
-			"args": "j"
-},
-{
-			"command": "vscode-neovim.compositeEscape2",
-			"key": "k",
-			"when": "neovim.mode == insert && editorTextFocus",
-			"args": "k"
-	},
+  // fix neovim plugin issue
+  {
+        "command": "vscode-neovim.compositeEscape1",
+        "key": "j",
+        "when": "neovim.mode == insert && editorTextFocus",
+        "args": "j"
+  },
+  {
+      "command": "vscode-neovim.compositeEscape2",
+      "key": "k",
+      "when": "neovim.mode == insert && editorTextFocus",
+      "args": "k"
+  },
 
-	// make find more in confortable way
-	{
-			"command": "editor.action.previousMatchFindAction",
-			"key": "cmd+k",
-			"when": "editorFocus && findWidgetVisible"
-	},
-	{
-			"command": "editor.action.nextMatchFindAction",
-			"key": "cmd+j",
-			"when": "editorFocus && findWidgetVisible"
-	},
-	{
-			"command": "closeFindWidget",
-			"key": "escape",
-			"when": "editorFocus && findWidgetVisible"
-	},
+  // make find more in confortable way
+  {
+      "command": "editor.action.previousMatchFindAction",
+      "key": "cmd+k",
+      "when": "editorFocus && findWidgetVisible"
+  },
+  {
+      "command": "editor.action.nextMatchFindAction",
+      "key": "cmd+j",
+      "when": "editorFocus && findWidgetVisible"
+  },
+  {
+      "command": "closeFindWidget",
+      "key": "escape",
+      "when": "editorFocus && findWidgetVisible"
+  },
+  {
+      "key": "cmd+d",
+      "command": "explorer.newFolder",
+      "when": "explorerViewletFocus"
+  },
+  {
+      "key": "cmd+n",
+      "command": "explorer.newFile",
+      "when": "explorerViewletFocus"
+  },
 ]
