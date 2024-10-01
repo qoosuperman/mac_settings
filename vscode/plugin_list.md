@@ -4,7 +4,8 @@
 - GitLens
 - PasteImage
 - Prettier
-- Ruby
+- Ruby LSP
 - ruby-rubocop
 - ruby-symbols
 - Vim
+- Github Copilot
