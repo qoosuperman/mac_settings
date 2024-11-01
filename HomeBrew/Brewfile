@@ -1,0 +1,13 @@
+# git related
+brew 'tig'
+brew 'git'
+brew 'gh'
+
+# ruby related
+brew 'rbenv'
+
+# python related
+brew 'pyenv'
+
+# terminal related
+brew 'fzf'

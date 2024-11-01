@@ -1,0 +1,1 @@
+use `brew bundle` to install all the software
