@@ -1,0 +1,49 @@
+#! /usr/bin/env zsh
+
+set -o ERR_EXIT
+set -o NO_UNSET
+set -o PIPE_FAIL
+
+# do we need inherit_errexit here?
+
+readonly EXIT_SUCCESS=0
+
+CONTEXT=$(
+    readonly DELIMITER=$'\t'
+
+    CONTEXTS=$(kubectl config get-contexts --output=name \
+		   | sed -E \
+			 -e 's@arn:aws:eks:([^:]+):([^:]+):cluster/(.+)@&\t\3 \2 \1 EKS@' \
+			 -e 's@gke_([^_]+)_([^_]+)_([^_]+)@&\t\3 \1 \2 GKE@' \
+		   | sort -k2)
+
+    readonly GET_CONTEXTS_RET=$?
+
+    if (( GET_CONTEXTS_RET != EXIT_SUCCESS )); then
+	echo 'Failed to get contexts from kubectl. exiting.' >&2
+	exit $GET_CONTEXTS_RET
+    fi
+
+    readonly CONTEXTS
+
+    FZF_ARGS=(
+	-d$DELIMITER
+	--with-nth=2..
+	--tac
+	--exact
+	--no-info
+	--select-1
+    )
+
+    if [[ $# -ge 1 ]]; then
+	FZF_ARGS+=( --query=$1 )
+    fi
+
+    paste <(<<< $CONTEXTS cut -d$DELIMITER -f1) \
+	  <(<<< $CONTEXTS cut -d$DELIMITER -f2- | column -t) \
+	| fzf $FZF_ARGS \
+	| cut -d$DELIMITER -f1)
+
+readonly CONTEXT
+
+kubectl config use-context $CONTEXT
