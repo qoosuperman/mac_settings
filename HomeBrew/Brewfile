@@ -11,3 +11,6 @@ brew 'pyenv'
 
 # terminal related
 brew 'fzf'
+
+# kubernetes related
+cask 'openlens'
