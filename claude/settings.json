@@ -10,6 +10,7 @@
       "Write",
       "Grep",
       "Glob",
+      "Bash(grep *)",
       "Bash(git status *)",
       "Bash(git log *)",
       "Bash(git diff *)",
@@ -45,7 +46,9 @@
       "Bash(python *)",
       "Bash(pip *)",
       "Bash(* --version)",
-      "Bash(* --help)"
+      "Bash(* --help)",
+      "WebSearch",
+      "WebFetch"
     ],
     "deny": [
       "Bash(rm -rf *)",
