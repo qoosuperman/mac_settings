@@ -1,0 +1,13 @@
+#! /usr/bin/env zsh
+
+set -o ERR_EXIT
+set -o NO_UNSET
+set -o PIPE_FAIL
+
+echo "Switching to master..."
+git checkout master
+
+echo "Pulling from upstream master..."
+git pull upstream master
+
+echo "✅ Done! master is now up to date with upstream."
