@@ -9,6 +9,7 @@ claude/
 ├── CLAUDE.md      # User-scope 指令（全域生效）
 ├── commands/      # Slash commands（/command-name）
 ├── skills/        # Skills（自動觸發的技能）
+├── settings.json  # 權限與偏好設定
 ├── setup.sh       # Symlink 安裝腳本
 └── README.md
 ```
@@ -28,6 +29,7 @@ claude/
 | `CLAUDE.md` | `~/.claude/CLAUDE.md` | 全域行為指令 |
 | `skills/*` | `~/.claude/skills/*` | 各 skill 資料夾 |
 | `commands/*` | `~/.claude/commands/*` | 各 command 檔案 |
+| `settings.json` | `~/.claude/settings.json` | 權限與偏好設定 |
 
 - 若目標位置已有同名檔案（非 symlink），會自動備份為 `*.backup.<timestamp>`
 - 若 symlink 已指向正確來源，會跳過不重建

@@ -75,5 +75,9 @@ else
   echo "  (尚無 commands)"
 fi
 
+# 4. settings.json
+echo "[settings.json]"
+symlink_item "${SCRIPT_DIR}/settings.json" "${CLAUDE_HOME}/settings.json"
+
 echo ""
 echo "完成！"

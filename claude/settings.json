@@ -1,0 +1,61 @@
+{
+  "model": "opus",
+  "enabledPlugins": {
+    "figma@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Grep",
+      "Glob",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git show *)",
+      "Bash(git branch *)",
+      "Bash(git stash *)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git rev-parse *)",
+      "Bash(git remote *)",
+      "Bash(gh *)",
+      "Bash(ls *)",
+      "Bash(pwd)",
+      "Bash(which *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(sort *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(chmod *)",
+      "Bash(echo *)",
+      "Bash(brew *)",
+      "Bash(node *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(ruby *)",
+      "Bash(bundle *)",
+      "Bash(python *)",
+      "Bash(pip *)",
+      "Bash(* --version)",
+      "Bash(* --help)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(mv *)",
+      "Bash(kubectl *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push --force *)",
+      "Bash(git reset --hard *)"
+    ]
+  }
+}
