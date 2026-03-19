@@ -47,6 +47,7 @@
       "Bash(pip *)",
       "Bash(* --version)",
       "Bash(* --help)",
+      "Bash(find *)",
       "WebSearch",
       "WebFetch"
     ],
