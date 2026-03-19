@@ -48,6 +48,7 @@
       "Bash(* --version)",
       "Bash(* --help)",
       "Bash(find *)",
+      "Bash(cd *)",
       "WebSearch",
       "WebFetch"
     ],
