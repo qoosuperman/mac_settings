@@ -1,0 +1,125 @@
+#!/usr/bin/env zsh
+
+set -o ERR_EXIT
+set -o NO_UNSET
+set -o PIPE_FAIL
+
+readonly DELIMITER=$'\t'
+readonly NEW_SENTINEL='__NEW__'
+
+# ---------------------------------------------------------------------------
+# Parse `git worktree list --porcelain` into tab-delimited lines:
+#   <path>\t<display>
+# ---------------------------------------------------------------------------
+build_list() {
+    local first=1
+    local wt_path="" branch=""
+
+    git worktree list --porcelain | while IFS= read -r line; do
+        case $line in
+            worktree\ *)
+                wt_path=${line#worktree }
+                branch=""
+                ;;
+            branch\ *)
+                # refs/heads/foo → foo
+                branch=${line#branch refs/heads/}
+                ;;
+            detached)
+                branch="(detached)"
+                ;;
+            "")
+                # End of one worktree entry — emit it
+                if [[ -n $wt_path ]]; then
+                    local rel_path
+                    rel_path=$(python3 -c "import os; print(os.path.relpath('$wt_path'))" 2>/dev/null) || rel_path="$wt_path"
+                    local name=${wt_path:t}   # basename
+                    if (( first )); then
+                        printf '%s%s[base] %s  %s\n' \
+                            "$wt_path" "$DELIMITER" "$branch" "$rel_path"
+                        first=0
+                    else
+                        printf '%s%s%s %s  %s\n' \
+                            "$wt_path" "$DELIMITER" "$name" "$branch" "$rel_path"
+                    fi
+                fi
+                wt_path=""
+                branch=""
+                ;;
+        esac
+    done
+
+    # Emit last entry if file didn't end with a blank line
+    if [[ -n $wt_path ]]; then
+        local rel_path
+        rel_path=$(python3 -c "import os; print(os.path.relpath('$wt_path'))" 2>/dev/null) || rel_path="$wt_path"
+        local name=${wt_path:t}
+        if (( first )); then
+            printf '%s%s[base] %s  %s\n' \
+                "$wt_path" "$DELIMITER" "$branch" "$rel_path"
+        else
+            printf '%s%s%s %s  %s\n' \
+                "$wt_path" "$DELIMITER" "$name" "$branch" "$rel_path"
+        fi
+    fi
+
+    # Option to create a new worktree
+    printf '%s%s+ Create new worktree\n' "$NEW_SENTINEL" "$DELIMITER"
+}
+
+# ---------------------------------------------------------------------------
+# fzf selection
+# ---------------------------------------------------------------------------
+FZF_ARGS=(
+    -d"$DELIMITER"
+    --with-nth=2..
+    --exact
+    --no-info
+)
+
+if [[ $# -ge 1 ]]; then
+    FZF_ARGS+=(--query="$1")
+fi
+
+if ! command -v fzf &>/dev/null; then
+    echo "Error: fzf is not installed" >&2
+    exit 1
+fi
+
+SELECTION=$(build_list | fzf "${FZF_ARGS[@]}" | cut -d"$DELIMITER" -f1) || {
+    rc=$?
+    # fzf returns 130 on user cancellation (Esc/Ctrl-C)
+    if (( rc == 130 )); then
+        exit 0
+    fi
+    exit $rc
+}
+readonly SELECTION
+
+[[ -n "$SELECTION" ]] || exit 1
+
+# ---------------------------------------------------------------------------
+# Handle selection
+# ---------------------------------------------------------------------------
+if [[ $SELECTION == "$NEW_SENTINEL" ]]; then
+    # Prompt on stderr so stdout stays clean for the path
+    printf 'Worktree name (directory name): ' >&2
+    read -r WT_NAME
+    [[ -n "$WT_NAME" ]] || { echo "Error: worktree name is required" >&2; exit 1; }
+
+    printf 'Branch name (default: %s): ' "$WT_NAME" >&2
+    read -r NEW_BRANCH
+    : ${NEW_BRANCH:=$WT_NAME}
+
+    printf 'Base branch (default: HEAD): ' >&2
+    read -r BASE_BRANCH
+    : ${BASE_BRANCH:=HEAD}
+
+    NEW_DIR="$(git rev-parse --show-toplevel)/.claude/worktrees/$WT_NAME"
+
+    git worktree add -b "$NEW_BRANCH" "$NEW_DIR" "$BASE_BRANCH" >&2
+
+    print -r -- "$NEW_DIR"
+else
+    print -r -- "$SELECTION"
+fi

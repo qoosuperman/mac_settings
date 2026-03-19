@@ -7,6 +7,11 @@ set -o PIPE_FAIL
 readonly SCRIPT_DIR="${0:a:h}"
 readonly TARGET_DIR="/usr/local/bin"
 
+if [[ ! -w "$TARGET_DIR" ]]; then
+    echo "Need sudo access for $TARGET_DIR"
+    exec sudo "$0" "$@"
+fi
+
 for script in "$SCRIPT_DIR"/*; do
     name="${script:t}"
 
