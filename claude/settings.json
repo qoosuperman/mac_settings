@@ -1,4 +1,28 @@
 {
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\e]1;⚡ Claude: 需要操作\\a'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\e]1;✅ Claude: 完成\\a'"
+          }
+        ]
+      }
+    ]
+  },
   "model": "opus",
   "enabledPlugins": {
     "figma@claude-plugins-official": true
@@ -10,6 +34,14 @@
       "Write",
       "Grep",
       "Glob",
+      "LS",
+      "MultiEdit",
+      "NotebookRead",
+      "NotebookEdit",
+      "TodoRead",
+      "TodoWrite",
+      "WebSearch",
+      "WebFetch",
       "Bash(grep *)",
       "Bash(git status *)",
       "Bash(git log *)",
@@ -48,9 +80,7 @@
       "Bash(* --version)",
       "Bash(* --help)",
       "Bash(find *)",
-      "Bash(cd *)",
-      "WebSearch",
-      "WebFetch"
+      "Bash(cd *)"
     ],
     "deny": [
       "Bash(rm -rf *)",
