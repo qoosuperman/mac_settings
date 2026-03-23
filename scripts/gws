@@ -115,9 +115,21 @@ if [[ $SELECTION == "$NEW_SENTINEL" ]]; then
     read -r BASE_BRANCH
     : ${BASE_BRANCH:=HEAD}
 
-    NEW_DIR="$(git rev-parse --show-toplevel)/.claude/worktrees/$WT_NAME"
+    local BASE_DIR
+    BASE_DIR="$(git rev-parse --show-toplevel)"
+    NEW_DIR="$BASE_DIR/.claude/worktrees/$WT_NAME"
 
     git worktree add -b "$NEW_BRANCH" "$NEW_DIR" "$BASE_BRANCH" >&2
+
+    # Symlink CLAUDE.md and .claude from base worktree
+    if [[ -e "$BASE_DIR/CLAUDE.md" ]]; then
+        ln -sf "$BASE_DIR/CLAUDE.md" "$NEW_DIR/CLAUDE.md" >&2
+        echo "Symlinked CLAUDE.md" >&2
+    fi
+    if [[ -d "$BASE_DIR/.claude" ]]; then
+        ln -sfn "$BASE_DIR/.claude" "$NEW_DIR/.claude" >&2
+        echo "Symlinked .claude" >&2
+    fi
 
     print -r -- "$NEW_DIR"
 else
