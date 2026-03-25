@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "printf '\\e]1;⚡ Claude: 需要操作\\a'"
+            "command": "printf '\\e]1;⚡ Claude: 需要操作\\a' > /dev/tty"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "printf '\\e]1;✅ Claude: 完成\\a'"
+            "command": "printf '\\e]1;✅ Claude: 完成\\a' > /dev/tty"
           }
         ]
       }
