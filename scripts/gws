@@ -127,8 +127,13 @@ if [[ $SELECTION == "$NEW_SENTINEL" ]]; then
         echo "Symlinked CLAUDE.md" >&2
     fi
     if [[ -d "$BASE_DIR/.claude" ]]; then
-        ln -sfn "$BASE_DIR/.claude" "$NEW_DIR/.claude" >&2
-        echo "Symlinked .claude" >&2
+        mkdir -p "$NEW_DIR/.claude"
+        for item in "$BASE_DIR/.claude"/*; do
+            [[ -e "$item" ]] || continue
+            [[ "${item:t}" == "worktrees" ]] && continue
+            ln -sfn "$item" "$NEW_DIR/.claude/${item:t}" >&2
+        done
+        echo "Symlinked .claude (excluding worktrees)" >&2
     fi
 
     print -r -- "$NEW_DIR"
