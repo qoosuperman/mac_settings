@@ -1,11 +1,6 @@
 ---
 name: review-pr
-description: >
-  Use this skill when the user wants to review code, review a PR, check PR comments,
-  view PR diff, read PR reviews, or any GitHub pull request related inspection task.
-  Triggers on phrases like "review PR", "review code", "check PR", "PR comments",
-  "look at this PR", or when the user provides a GitHub PR URL.
-argument-hint: [--base <branch>]
+description: "Use this skill when the user wants to review a PR, check PR comments, view PR diff, read PR reviews, or inspect any GitHub pull request. Triggers: review PR, check PR, PR comments, look at this PR, or a GitHub PR URL. Not for: creating/merging PRs, pre-landing diff review (use /review), local-only code review (use /codex-cli-review). Output: structured review notes with severity-classified findings and checklist."
 allowed-tools: Bash(git:*), Read, Grep, Glob, Edit
 ---
 
@@ -14,11 +9,16 @@ allowed-tools: Bash(git:*), Read, Grep, Glob, Edit
 Always use the `gh` CLI to interact with GitHub pull requests. Never use the
 GitHub MCP server tools for these tasks.
 
-## Context
+## Follow-Through Policy
 
-- Status: !`git status -sb`
-- Diff: !`git diff --stat origin/main...HEAD || git diff --stat HEAD~1`
-- Commits: !`git log --oneline -10`
+- **Auto-allowed**: `gh pr view`, `gh pr diff`, `gh api` read endpoints, reading local files
+- **Ask first**: `gh pr checkout` (changes local branch state), posting review comments
+- **Never without explicit request**: merge PR, close PR, approve PR
+
+## Prerequisites
+
+- `gh` CLI must be installed and authenticated (`gh auth status`).
+- If `gh` is not available or not logged in, stop and tell the user to run `gh auth login`.
 
 ## Determine the PR
 
@@ -86,23 +86,47 @@ gh pr checks <number> --repo <owner/repo>
 7. PR checklist: tests, rollout, compat
 8. Discover new rules -> update CLAUDE.md or .claude/rules/
 
-## Output
+## Output Contract
+
+Output the following sections in order. Omit "Rules Update" if no new rules were discovered.
 
 ```markdown
-## Review Notes
+## Summary
 
-- <findings>
+- **What**: one-sentence summary of what the PR does
+- **Author**: PR author
+- **Scope**: number of files changed, additions, deletions
+
+## Findings
+
+### Critical (blocks merge)
+- [file:line] Issue description
+
+### Major (should fix before merge)
+- [file:line] Issue description
+
+### Minor / Suggestions
+- [file:line] Issue description
+
+(If no findings in a severity level, write "None.")
 
 ## PR Checklist
 
-- [ ] Tests pass
-- [ ] No breaking changes
-- [ ] Docs updated
+- [ ] Tests cover changed behavior
+- [ ] No security concerns (injection, auth, secrets)
+- [ ] No breaking API/interface changes (or documented)
+- [ ] Error handling for edge cases
+
+## Merge Recommendation
+
+One of: ✅ Ready / ⚠️ Ready with minor fixes / ⛔ Blocked (state reason)
 
 ## Rules Update (if any)
 
-- <proposed patch>
+- Proposed CLAUDE.md or .claude/rules/ patch
 ```
+
+**Done when**: all sections above are filled, every Critical/Major finding references a specific file and line.
 
 ## Notes
 
