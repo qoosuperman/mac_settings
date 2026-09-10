@@ -4,10 +4,58 @@ set -o ERR_EXIT
 set -o NO_UNSET
 set -o PIPE_FAIL
 
-echo "Switching to master..."
-git checkout master
+# fork 來的 repo 用 upstream，自己的 repo 通常只有 origin，
+# 兩個都沒有就退回第一個設定的 remote。
+resolve_remote() {
+  local candidate
+  for candidate in upstream origin; do
+    if git remote get-url "$candidate" >/dev/null 2>&1; then
+      echo "$candidate"
+      return
+    fi
+  done
 
-echo "Pulling from upstream master..."
-git pull upstream master
+  local first_remote
+  first_remote=$(git remote | head -n 1)
+  if [[ -z "$first_remote" ]]; then
+    echo "❌ 這個 repo 沒有設定任何 remote。" >&2
+    return 1
+  fi
+  echo "$first_remote"
+}
 
-echo "✅ Done! master is now up to date with upstream."
+# 這個 repo 的 base branch 可能是 master 也可能是 main：
+# 先問 remote 的 HEAD 指向哪裡，問不到再看哪個 branch 真的存在。
+resolve_base_branch() {
+  local remote="$1"
+
+  local head_ref
+  head_ref=$(git symbolic-ref --quiet --short "refs/remotes/$remote/HEAD" 2>/dev/null) \
+    || head_ref=""
+  if [[ -n "$head_ref" ]]; then
+    echo "${head_ref#$remote/}"
+    return
+  fi
+
+  local candidate
+  for candidate in main master; do
+    if git show-ref --verify --quiet "refs/heads/$candidate" \
+      || git show-ref --verify --quiet "refs/remotes/$remote/$candidate"; then
+      echo "$candidate"
+      return
+    fi
+  done
+
+  echo "master"
+}
+
+remote=$(resolve_remote)
+base_branch=$(resolve_base_branch "$remote")
+
+echo "Switching to $base_branch..."
+git checkout "$base_branch"
+
+echo "Pulling from $remote $base_branch..."
+git pull "$remote" "$base_branch"
+
+echo "✅ Done! $base_branch is now up to date with $remote."
