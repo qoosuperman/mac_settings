@@ -1,32 +1,4 @@
 {
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\e]1;⚡ Claude: 需要操作\\a' > /dev/tty"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\e]1;✅ Claude: 完成\\a' > /dev/tty"
-          }
-        ]
-      }
-    ]
-  },
-  "model": "opus",
-  "enabledPlugins": {
-    "figma@claude-plugins-official": true
-  },
   "permissions": {
     "allow": [
       "Read",
@@ -87,10 +59,48 @@
       "Bash(sudo *)",
       "Bash(mv *)",
       "Bash(kubectl *)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
       "Bash(git push --force *)",
       "Bash(git reset --hard *)"
     ]
-  }
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\e]1;⚡ Claude: 需要操作\\a' > /dev/tty"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\e]1;✅ Claude: 完成\\a' > /dev/tty"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/anthonychao/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "slack@claude-plugins-official": true
+  },
+  "language": "zh-TW",
+  "effortLevel": "medium",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true
 }
